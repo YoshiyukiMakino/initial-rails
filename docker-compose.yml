@@ -1,0 +1,46 @@
+version: '3'
+services:
+  pg:
+    build:
+      context: .
+      dockerfile: ./pg12.Dockerfile
+      args:
+        - DB_LANG=ja_JP
+    volumes:
+      - ir-pg:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: rootpassword
+    ports:
+      - 25432:5432
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ir_app
+    container_name: ir_app
+    environment:
+      RAILS_LOG_TO_STDOUT: 1
+      EDITOR: vim
+      RUBYOPT: '-W:no-deprecated'
+      NODE_ENV: development
+      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
+      DATABASE_ENCODING: unicode
+      DATABASE_URL: postgres://root:rootpassword@pg:5432
+    command: /bin/sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    ports:
+      - 23333:3000
+      - 23888:8888
+      - 23035:3035
+    volumes:
+      - .:/app:cached
+      - ir-bundle:/bundle
+    depends_on:
+      - pg
+
+volumes:
+  ir-bundle:
+    driver: local
+  ir-pg:
+    driver: local
