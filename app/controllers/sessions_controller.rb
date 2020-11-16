@@ -2,14 +2,16 @@ class SessionsController < ApplicationController
   def create
     unless request.env['omniauth.auth'][:uid]
       flash[:danger] = '連携に失敗しました'
-      redirect_to root_url
+      # redirect_to root_url
+      redirect_to root_path
     end
     user_data = request.env['omniauth.auth']
     user = User.find_by(uid: user_data[:uid])
     if user
       log_in user
       flash[:success] = 'ログインしました'
-      redirect_to root_url
+      # redirect_to root_url
+      redirect_to root_path
     else
       new_user = User.new(
           uid: user_data[:uid],
@@ -23,7 +25,8 @@ class SessionsController < ApplicationController
       else
         flash[:danger] = '予期せぬエラーが発生しました'
       end
-      redirect_to root_url
+      # redirect_to root_url
+      redirect_to root_path
     end
   end
 
@@ -31,6 +34,7 @@ class SessionsController < ApplicationController
   def destroy
     log_out if logged_in?
     flash[:success] = 'ログアウトしました'
-    redirect_to root_url
+    # redirect_to root_url
+    redirect_to root_path
   end
 end
