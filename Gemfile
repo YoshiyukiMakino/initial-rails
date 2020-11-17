@@ -58,3 +58,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'haml-rails'
 gem 'dotenv-rails'
 gem 'omniauth-twitter'
+gem "twitter"
+gem 'omniauth'
+gem 'devise'
