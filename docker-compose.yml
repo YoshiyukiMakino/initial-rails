@@ -21,6 +21,8 @@ services:
     image: ir_app
     container_name: ir_app
     environment:
+      TWITTER_API_KEY: uwcz1Ed5nyvAIpEhuIawThgqt
+      TWITTER_API_SECRET: oIAc1ZzDuTCZhl86co0F5x24VmsMbpnSIZAyY1VD4yH8AExCrC
       RAILS_LOG_TO_STDOUT: 1
       EDITOR: vim
       RUBYOPT: '-W:no-deprecated'
